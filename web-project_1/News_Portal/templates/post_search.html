@@ -1,0 +1,27 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% block content %}
+<h1>Поиск по дате</h1>
+<hr>
+<form action="" method="get">
+    {% csrf_token %}
+    {{ filterset.form.as_p }}
+    <input type="submit" value="Поиск" />
+</form>
+{% if posts %}
+<table>
+    <tr>
+        <td>заголовок</td>
+        <td>дата публикации</td>
+        <td>краткая вырезка</td>
+    </tr>
+    {% for post in posts %}
+    <tr>
+        <td>{{ post.hat|censored }}</td>
+        <td>{{ post.time_in }}</td>
+        <td>{{ post.text|truncatewords:20|censored }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+{% endblock content %}
